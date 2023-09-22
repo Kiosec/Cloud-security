@@ -51,14 +51,6 @@ The containers can have different public access level configuration :
 gobuster dir -u https://kiosecstorage.blob.core.windows.net/public/ -w /usr/share/wordlists/dirb/big.txt -t 30 -e -k -x .html,.php,.asp,.aspx,.htm,.xml,.json,.jsp,.pl,.txt,.docs,.docx,.yaml
 ```
 
-#####  ➤  Read container having "container/public" public access level
-
-Add "/?restype=container&comp=list"
-
-```
-https://kiosecstorage.blob.core.windows.net/public/?restype=container&comp=list
-```
-
 #####  ➤  Identify misconfigured blob containers using MicroBurst (Powershell)
 
 ```
@@ -73,4 +65,12 @@ Invoke-EnumerateAzure Blobs -Base kiosecstorage -Folders .\customcontainer.txt
 
 # Download the contents of the objects detected (ex: credentials.txt)
 Invoke-WebRequest -Uri "https://kiosecstorage.blob.core.windows.net/public/credentials.txt" --OutFile "credentials.txt"
+```
+
+#####  ➤  Read container having "container/public" public access level
+
+Add "/?restype=container&comp=list"
+
+```
+https://kiosecstorage.blob.core.windows.net/public/?restype=container&comp=list
 ```
