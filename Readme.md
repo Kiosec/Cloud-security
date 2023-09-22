@@ -58,3 +58,19 @@ Add "/?restype=container&comp=list"
 ```
 https://kiosecstorage.blob.core.windows.net/public/?restype=container&comp=list
 ```
+
+#####  ➤  Identify misconfigured blob containers using MicroBurst (Powershell)
+
+```
+# Import module
+Import-Module .\MicroBurst.psm1
+
+# Detect storage misconfigured with the specific storage account name kiosecstorage
+Invoke-EnumerateAzure Blobs -Base kiosecstorage
+
+# Detect storage misconfigured with custom container list (customcontainer.txt) and storage account name (kiosecstorage)
+Invoke-EnumerateAzure Blobs -Base kiosecstorage -Folders .\customcontainer.txt
+
+# Download the contents of the objects detected (ex: credentials.txt)
+Invoke-WebRequest -Uri "https://kiosecstorage.blob.core.windows.net/public/credentials.txt" --OutFile "credentials.txt"
+```
