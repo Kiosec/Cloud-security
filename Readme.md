@@ -18,9 +18,11 @@ Password attacks
 
 
 
-``` ```
-``` ```
-## Enumerate storage account
+#
+# ⭕ Azure CSP - Public enumeration
+
+
+## 🔻Enumerate storage account
 
 A storage account is way of hadnling data in the cloud and are compose to the following sub-services :
 
@@ -82,9 +84,11 @@ https://kiosecstorage.blob.core.windows.net/public/?restype=container&comp=list
 
 
 
-``` ```
-``` ```
-## Guessing Azure AD credentials using MSOLSpray
+#
+# ⭕ Azure CSP - Password attacks
+
+
+## 🔻Guessing Azure AD credentials using MSOLSpray
 
 MSOLSpray takes a list of user and account a list of password and try them against the Azure authentication portal. 
 
@@ -101,9 +105,8 @@ Import-Module .\MSOLSpray.ps1
 Invoke-MSOLSray -UserList .\userlist.txt -Password myweakpassword123 
 ```
 
-``` ```
-``` ```
-## Identify conditional access policy bypass using MFASweep
+
+## 🔻Identify conditional access policy bypass using MFASweep
 
 MFASweep allows to detect the conditional access policy bypasses against a compromised user accounts.
 
