@@ -212,6 +212,12 @@ Review of common areas within Azure that are available to the Reader role where 
 
 ***Important note :*** One important thing to note is that some credentials are meant to be in cleartext. There are specific services in Azure where cleartext passwords are expected and utilized as part of the service. This may seem like a dangerous practice, and it is certainly something that we will make use of as an attacker, but with proper authorization controls around the credentials, they can be safely used by some services.
 
+#### Review the historical registry of the ressource group to find cleartext credentials
+
+Every resource group in an Azure subscription maintains a history of past resource deployments (up to 800 per resource group). This history of past resource deployments can be examined from the Azure portal.
+
+![image](https://github.com/Kiosec/Cloud-security/assets/100965892/15ccd090-787b-4388-9a36-4863e01a9a7b)
+
 
 
 ## 🔻Exploiting contributor permissions on IaaS services
