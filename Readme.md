@@ -143,6 +143,43 @@ Current misconfigurations :
 - Reading the configuration settings of Azure App Service and Azure Function apps requires read/write permission that the Reader role does not have.
 - Reading the account keys that can be used to access data in a Cosmos DB account requires explicit permissions that the Reader role does not have.
 
+
+#### Gathering an inventory of ressources
+
+#####  ➤ From the Azure portal
+
+Navigator **all ressources**, then click to Export to CSV.
+
+***Important note :*** The extract is limited to the 5K first ressources.
+
+![image](https://github.com/Kiosec/Cloud-security/assets/100965892/fd83ecd8-16f4-41fa-8a2e-6f2d8633c58c)
+
+
+#####  ➤ Using PowerZure
+
+```
+#Download PowerZure in an Az Powershell module-authenticated powershell session
+PS C:\> cd C:\Users\$env:USERNAME
+PS C:\> git clone https://github.com/hausec/PowerZure.git
+
+#Import the Powerzure module into the powershell session
+PS C:\> cd .\PowerZure\
+PS C:\> Import-Module .\PowerZure.ps1
+
+#If you need to installed the Azure AD Module, answer yes then reopen a new powershell session
+PS C:\> cd C:\Users\$env:USERNAME\PowerZure
+PS C:\> Import-Module .\PowerZure.ps1
+
+#Execute a command like : determining the actual access that a credential has and its level of access (read/write/execute).
+PS C:\> Get-AzureTargets
+```
+
+The list of all PowerZure availiable functions can be listed with **'PowerZure -h'** command
+
+![image](https://github.com/Kiosec/Cloud-security/assets/100965892/87f382f2-4603-4bfa-b003-57cbb5421d4a)
+
+***Important note :*** The noting that there are default detections in the Azure Defender-enabled verion of Azure Security Center for PowerZure.
+
 ## 🔻Exploiting contributor permissions on IaaS services
 
 
