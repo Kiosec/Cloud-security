@@ -138,6 +138,10 @@ Invoke-MFASweep -Username kiosec@myazurelab.com -Password myweakpassword123
 
 ## 🔻Exploiting reader permissions
 
+Current misconfigurations :
+- Reading the keys of an Azure storage account requires explicit permission that is excluded from the permissions included as part of the Reader role
+- Reading the configuration settings of Azure App Service and Azure Function apps requires read/write permission that the Reader role does not have.
+- Reading the account keys that can be used to access data in a Cosmos DB account requires explicit permissions that the Reader role does not have.
 
 ## 🔻Exploiting contributor permissions on IaaS services
 
