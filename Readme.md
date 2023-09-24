@@ -28,7 +28,7 @@ Exploitation
 * [2. Exploiting contributor permissions on IaaS services](#exploiting-contributor-permissions-on-iaas-services)
 * [3. Exploiting contributor permissions on PaaS services](#exploiting-contributor-permissions-on-paas-services)
 * [4. Exploiting owner and privileged Azure AD role permissions](#exploiting-owner-and-privileged-Azure-AD-role-permissions)
-* [4. Exploiting Azure Instance Metadata Service (IMDS)](#exploiting-azure-instance-metadata-service-imds)
+* [5. Exploiting Azure Instance Metadata Service (IMDS)](#exploiting-azure-instance-metadata-service-imds)
 
 ##### ➤ AWS CSP
 
