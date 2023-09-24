@@ -208,10 +208,9 @@ Invoke-MFASweep -Username kiosec@myazurelab.com -Password myweakpassword123
 
 ## 🔻Exploiting reader permissions
 
-Current misconfigurations :
-- Reading the keys of an Azure storage account requires explicit permission that is excluded from the permissions included as part of the Reader role
-- Reading the configuration settings of Azure App Service and Azure Function apps requires read/write permission that the Reader role does not have.
-- Reading the account keys that can be used to access data in a Cosmos DB account requires explicit permissions that the Reader role does not have.
+Review of common areas within Azure that are available to the Reader role where cleartext passwords can be stored. These may be intentional cleartext passwords, but for the most part, these data stores will contain credentials that are accidentally exposed.
+
+***Important note :*** One important thing to note is that some credentials are meant to be in cleartext. There are specific services in Azure where cleartext passwords are expected and utilized as part of the service. This may seem like a dangerous practice, and it is certainly something that we will make use of as an attacker, but with proper authorization controls around the credentials, they can be safely used by some services.
 
 
 
