@@ -8,6 +8,14 @@ Public enumeration
 
 * [1. Enumerate storage account](#enumerate-storage-account)
 
+
+Authenticated enumeration
+
+* [1. Gathering an inventory of ressources (from Azure portal)](#gathering-an-inventory-of-ressources-from-Azure-portal)
+* [2. Gathering information using PowerZure](#gathering-information-using-powerzure)
+* [3. Enumerating subscription information with MicroBurst](#enumerating-subscription-information-with-microburst)
+
+
 Password attacks
 
 * [1. Guessing Azure AD credentials using MSOLSpray](#Guessing-Azure-AD-credentials-using-MSOLSpray)
@@ -20,6 +28,7 @@ Exploitation
 * [2. Exploiting contributor permissions on IaaS services](#exploiting-contributor-permissions-on-iaas-services)
 * [3. Exploiting contributor permissions on PaaS services](#exploiting-contributor-permissions-on-paas-services)
 * [4. Exploiting owner and privileged Azure AD role permissions](#exploiting-owner-and-privileged-Azure-AD-role-permissions)
+
 
 ##### ➤ AWS CSP
 
@@ -92,6 +101,67 @@ https://kiosecstorage.blob.core.windows.net/public/?restype=container&comp=list
 
 
 #
+# ⭕ Azure CSP - Authenticated enumeration
+
+
+## 🔻Gathering an inventory of ressources (from Azure portal)
+
+#####  ➤ From the Azure portal
+
+Navigator **all ressources**, then click to Export to CSV.
+
+***Important note :*** The extract is limited to the 5K first ressources.
+
+![image](https://github.com/Kiosec/Cloud-security/assets/100965892/fd83ecd8-16f4-41fa-8a2e-6f2d8633c58c)
+
+
+## 🔻 Gathering information using PowerZure
+
+```
+#Download PowerZure in an Az Powershell module-authenticated powershell session
+PS C:\> cd C:\Users\$env:USERNAME
+PS C:\> git clone https://github.com/hausec/PowerZure.git
+
+#Import the Powerzure module into the powershell session
+PS C:\> cd .\PowerZure\
+PS C:\> Import-Module .\PowerZure.ps1
+
+#If you need to installed the Azure AD Module, answer yes then reopen a new powershell session
+PS C:\> cd C:\Users\$env:USERNAME\PowerZure
+PS C:\> Import-Module .\PowerZure.ps1
+
+#Execute a command like : determining the actual access that a credential has and its level of access (read/write/execute).
+PS C:\> Get-AzureTargets
+```
+
+The list of all PowerZure availiable functions can be listed with **'PowerZure -h'** command
+
+![image](https://github.com/Kiosec/Cloud-security/assets/100965892/87f382f2-4603-4bfa-b003-57cbb5421d4a)
+
+***Important note :*** The noting that there are default detections in the Azure Defender-enabled verion of Azure Security Center for PowerZure.
+
+
+## 🔻Enumerating subscription information with MicroBurst
+
+```
+#Import MicroBurst module in an Az Powershell module-authenticated powershell session
+PS C:\> cd C:\Users\$env:USERNAME\MicroBurst
+PS C:\> Import-Module .\MicroBurst.psm1
+
+#Create a folder to store the output of the function
+PS C:\> New-Item -Name "microburst-output" -ItemType "directory"
+
+#Run the MicroBurst function to enumerate the Azure subscription
+PS C:\> Get-AzDomainInfo -Verbose -Folder microburstoutput
+```
+
+![image](https://github.com/Kiosec/Cloud-security/assets/100965892/4e792bef-81d0-4db0-9b4b-381acf68e3f1)
+
+***Important note :*** The noting that there are default detections in the Azure Defender-enabled verion of Azure Security Center for MicroBurst.
+
+
+
+#
 # ⭕ Azure CSP - Password attacks
 
 
@@ -143,62 +213,6 @@ Current misconfigurations :
 - Reading the configuration settings of Azure App Service and Azure Function apps requires read/write permission that the Reader role does not have.
 - Reading the account keys that can be used to access data in a Cosmos DB account requires explicit permissions that the Reader role does not have.
 
-
-#### Gathering an inventory of ressources
-
-#####  ➤ From the Azure portal
-
-Navigator **all ressources**, then click to Export to CSV.
-
-***Important note :*** The extract is limited to the 5K first ressources.
-
-![image](https://github.com/Kiosec/Cloud-security/assets/100965892/fd83ecd8-16f4-41fa-8a2e-6f2d8633c58c)
-
-
-#####  ➤ Using PowerZure
-
-```
-#Download PowerZure in an Az Powershell module-authenticated powershell session
-PS C:\> cd C:\Users\$env:USERNAME
-PS C:\> git clone https://github.com/hausec/PowerZure.git
-
-#Import the Powerzure module into the powershell session
-PS C:\> cd .\PowerZure\
-PS C:\> Import-Module .\PowerZure.ps1
-
-#If you need to installed the Azure AD Module, answer yes then reopen a new powershell session
-PS C:\> cd C:\Users\$env:USERNAME\PowerZure
-PS C:\> Import-Module .\PowerZure.ps1
-
-#Execute a command like : determining the actual access that a credential has and its level of access (read/write/execute).
-PS C:\> Get-AzureTargets
-```
-
-The list of all PowerZure availiable functions can be listed with **'PowerZure -h'** command
-
-![image](https://github.com/Kiosec/Cloud-security/assets/100965892/87f382f2-4603-4bfa-b003-57cbb5421d4a)
-
-***Important note :*** The noting that there are default detections in the Azure Defender-enabled verion of Azure Security Center for PowerZure.
-
-#####  ➤ Enumerating subscription infirmation with MicroBurst
-
-
-```
-#Import MicroBurst module in an Az Powershell module-authenticated powershell session
-PS C:\> cd C:\Users\$env:USERNAME\MicroBurst
-PS C:\> Import-Module .\MicroBurst.psm1
-
-#Create a folder to store the output of the function
-PS C:\> New-Item -Name "microburst-output" -ItemType "directory"
-
-#Run the MicroBurst function to enumerate the Azure subscription
-PS C:\> Get-AzDomainInfo -Verbose -Folder microburstoutput
-```
-
-![image](https://github.com/Kiosec/Cloud-security/assets/100965892/4e792bef-81d0-4db0-9b4b-381acf68e3f1)
-
-
-***Important note :*** The noting that there are default detections in the Azure Defender-enabled verion of Azure Security Center for MicroBurst.
 
 
 ## 🔻Exploiting contributor permissions on IaaS services
