@@ -180,6 +180,27 @@ The list of all PowerZure availiable functions can be listed with **'PowerZure -
 
 ***Important note :*** The noting that there are default detections in the Azure Defender-enabled verion of Azure Security Center for PowerZure.
 
+#####  ➤ Enumerating subscription infirmation with MicroBurst
+
+
+```
+#Import MicroBurst module in an Az Powershell module-authenticated powershell session
+PS C:\> cd C:\Users\$env:USERNAME\MicroBurst
+PS C:\> Import-Module .\MicroBurst.psm1
+
+#Create a folder to store the output of the function
+PS C:\> New-Item -Name "microburst-output" -ItemType "directory"
+
+#Run the MicroBurst function to enumerate the Azure subscription
+PS C:\> Get-AzDomainInfo -Verbose -Folder microburstoutput
+```
+
+![image](https://github.com/Kiosec/Cloud-security/assets/100965892/4e792bef-81d0-4db0-9b4b-381acf68e3f1)
+
+
+***Important note :*** The noting that there are default detections in the Azure Defender-enabled verion of Azure Security Center for MicroBurst.
+
+
 ## 🔻Exploiting contributor permissions on IaaS services
 
 
