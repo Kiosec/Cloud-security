@@ -14,6 +14,13 @@ Password attacks
 * [2. Identify conditional access policy bypass using MFASweep](#Identify-conditional-access-policy-bypass-using-MFASweep)
 
 
+Exploitation
+
+* [1. Exploiting reader permissions](#exploiting-reader-permissions)
+* [2. Exploiting contributor permissions on IaaS services](#exploiting-contributor-permissions-on-iaas-services)
+* [3. Exploiting contributor permissions on PaaS services](#exploiting-contributor-permissions-on-paas-services)
+* [4. Exploiting owner and privileged Azure AD role permissions](#exploiting-owner-and-privileged-Azure-AD-role-permissions)
+
 ##### ➤ AWS CSP
 
 
@@ -124,3 +131,18 @@ Invoke-MFASweep -Username kiosec@myazurelab.com -Password myweakpassword123
 ```
 
 
+
+#
+# ⭕ Azure CSP - Exploitation
+
+
+## 🔻Exploiting reader permissions
+
+
+## 🔻Exploiting contributor permissions on IaaS services
+
+
+## 🔻Exploiting contributor permissions on PaaS services
+
+
+## 🔻Exploiting owner and privileged Azure AD role permissions
