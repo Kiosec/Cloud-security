@@ -218,7 +218,15 @@ Every resource group in an Azure subscription maintains a history of past resour
 
 ![image](https://github.com/Kiosec/Cloud-security/assets/100965892/15ccd090-787b-4388-9a36-4863e01a9a7b)
 
+An attacker can review the deployment history for sensitive information that may have been accidentally exposed. There are usually two reasons for this information disclosure. The first reason relates to the wrong parameter type for sensitive information in the templates. There are multiple data types that can be used for parameters in an Azure deployment, but two key ones that we care about are **String** and **SecureString**
+- **String** : Visble in the inputs of the deploiement history (ex : adminUsername)
+- **SecureString** : Not displayed in the input section of the deployment history (ex: adminpassword)
 
+![image](https://github.com/Kiosec/Cloud-security/assets/100965892/2c8237ba-3c84-4ce0-90f6-119f126529af)
+
+Typically seen this happening with early deployments in a resource group. Once an engineer realizes the mistake in the template, they will correct it for future deployments, but they may forget to clean up previous deployments that have exposed sensitive information.
+
+The second main reason for information disclosure is that cloud engineers may accidentally include sensitive values in the output section of their templates.These may be used to pass certain values to another external process in a series of automated tasks. Sensitive values such as account keys, passwords, or connection strings may accidentally be included in this section. **It is worth noting that even SecureString parameter values can be output as plain text in the output section.**
 
 ## 🔻Exploiting contributor permissions on IaaS services
 
