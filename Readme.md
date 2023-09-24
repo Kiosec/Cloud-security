@@ -28,7 +28,7 @@ Exploitation
 * [2. Exploiting contributor permissions on IaaS services](#exploiting-contributor-permissions-on-iaas-services)
 * [3. Exploiting contributor permissions on PaaS services](#exploiting-contributor-permissions-on-paas-services)
 * [4. Exploiting owner and privileged Azure AD role permissions](#exploiting-owner-and-privileged-Azure-AD-role-permissions)
-
+* [4. Exploiting Azure Instance Metadata Service (IMDS)](#exploiting-azure-instance-metadata-service-imds)
 
 ##### ➤ AWS CSP
 
@@ -228,6 +228,14 @@ Typically seen this happening with early deployments in a resource group. Once a
 
 The second main reason for information disclosure is that cloud engineers may accidentally include sensitive values in the output section of their templates.These may be used to pass certain values to another external process in a series of automated tasks. Sensitive values such as account keys, passwords, or connection strings may accidentally be included in this section. **It is worth noting that even SecureString parameter values can be output as plain text in the output section.**
 
+#### Review the historical registry of the ressource group to find cleartext credentials (MicroBurst)
+
+The Microburst function (Get-AzDomainInfo) also collect the resource deployment histories. The enumerated resource group deployment information is stored into the Microburst output folder :
+**Az –> <Subscription Name> –> Resources –> Deployments.txt**
+
+![image](https://github.com/Kiosec/Cloud-security/assets/100965892/4df1a9a9-9a55-47bd-baf3-dabe6812b46d)
+
+
 ## 🔻Exploiting contributor permissions on IaaS services
 
 
@@ -235,3 +243,28 @@ The second main reason for information disclosure is that cloud engineers may ac
 
 
 ## 🔻Exploiting owner and privileged Azure AD role permissions
+
+
+## 🔻Exploiting Azure Instance Metadata Service (IMDS)
+
+The IMDS is a REST API endpoint that is available at a non-routable IP address (169.254.169.254) from within a VM instance. It can be used to obtain information about the instance platform configuration and to request access tokens if the instance is assigned a managed identity.
+
+Documentation :  https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service
+
+Once gain root access on the VM, try to request the IMDS.
+
+#### Request information about the VM's compute, network, disk, etc.
+```
+azureadmin@LinuxVM:~# sudo su –
+root@LinuxVM:~# apt update -y
+root@LinuxVM:~# apt install jq -y
+root@LinuxVM:~# curl -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance?apiversion=2020-09-01" | jq
+```
+
+#### Check whether the VM has an associated managed identity
+
+If one is used, an access_token will be returned and this could present an opportunity to escalate privileges
+
+```
+root@LinuxVM:~# curl -H Metadata:true -s 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com%2F' | jq
+```
